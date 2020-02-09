@@ -12,7 +12,7 @@ app = FastAPI()
 
 
 # If modifying these scopes, delete the file token.pickle.
-@app.get("/")
+@app.get("/read_events/")
 async def read_events():
     """
     Prints the start and name of the next 10 events on the user's calendar.
@@ -37,7 +37,7 @@ async def read_events():
         i += 1
     return dict
 
-@app.post("/")
+@app.post("/write_events")
 async def write_event(event):
     # Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
     # stored credentials.
