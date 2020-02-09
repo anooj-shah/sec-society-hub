@@ -7,10 +7,23 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from pymongo import MongoClient
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+
+
+origins = [
+    "http://localhost:8080",
+    "https://society-hub-api.herokuapp.com/"
+]
 
 app = FastAPI()
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # If modifying these scopes, delete the file token.pickle.
 @app.get("/read_events/")
 async def read_events():
