@@ -8,10 +8,11 @@ function App() {
   return (
     <div>
       <Header />
-      <CardDay />
-      <CardDay />
-      <CardDay />
-      <CardDay />
+      <CardDay day="Monday" />
+      <CardDay day="Tuesday" />
+      <CardDay day="Wednesday" />
+      <CardDay day="Thursday" />
+      <CardDay day="Friday" />
     </div>
   );
 }
