@@ -7,6 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from pymongo import MongoClient
 from fastapi import FastAPI
+
 from starlette.middleware.cors import CORSMiddleware
 
 
@@ -118,6 +119,8 @@ def setup_google_calendar():
     service = build('calendar', 'v3', credentials=creds)
     return service
 
+def index():
+    return "<h1>Hello</h1>"
 def main():
     service = setup_google_calendar()
     read_events()

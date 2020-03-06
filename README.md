@@ -1,2 +1,1 @@
 # sec-society-hub
-
