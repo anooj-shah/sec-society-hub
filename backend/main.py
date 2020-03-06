@@ -34,11 +34,11 @@ async def read_events():
     service = setup_google_calendar()
     dict = {}
     # Call the Calendar API
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
     print('Getting the upcoming 10 events')
     events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=10, singleEvents=True,
-                                        orderBy='startTime').execute()
+                                          maxResults=10, singleEvents=True,
+                                          orderBy='startTime').execute()
     events = events_result.get('items', [])
 
     if not events:
@@ -51,6 +51,7 @@ async def read_events():
         i += 1
     return dict
 
+
 @app.post("/write_events")
 async def write_event(event):
     # Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
@@ -59,38 +60,36 @@ async def write_event(event):
     service = setup_google_calendar()
 
     event = {
-      'summary': 'Test Event 1',
-      'location': '800 Howard St., San Francisco, CA 94103',
-      'description': 'A chance to hear more about Google\'s developer products.',
-      'start': {
-        'dateTime': '2020-02-09T09:00:00-07:00',
-        'timeZone': 'America/Los_Angeles',
-      },
-      'end': {
-        'dateTime': '2020-02-09T17:00:00-07:00',
-        'timeZone': 'America/Los_Angeles',
-      },
-      'recurrence': [
-        'RRULE:FREQ=DAILY;COUNT=2'
-      ],
-      # 'attendees': [
-      #   {'email': 'lpage@example.com'},
-      #   {'email': 'sbrin@example.com'},
-      # ],
-      'reminders': {
-        'useDefault': False,
-        'overrides': [
-          {'method': 'email', 'minutes': 24 * 60},
-          {'method': 'popup', 'minutes': 10},
+        'summary': 'Test Event 1',
+        'location': '800 Howard St., San Francisco, CA 94103',
+        'description': 'A chance to hear more about Google\'s developer products.',
+        'start': {
+            'dateTime': '2020-02-09T09:00:00-07:00',
+            'timeZone': 'America/Los_Angeles',
+        },
+        'end': {
+            'dateTime': '2020-02-09T17:00:00-07:00',
+            'timeZone': 'America/Los_Angeles',
+        },
+        'recurrence': [
+            'RRULE:FREQ=DAILY;COUNT=2'
         ],
-      },
+        # 'attendees': [
+        #   {'email': 'lpage@example.com'},
+        #   {'email': 'sbrin@example.com'},
+        # ],
+        'reminders': {
+            'useDefault': False,
+            'overrides': [
+                {'method': 'email', 'minutes': 24 * 60},
+                {'method': 'popup', 'minutes': 10},
+            ],
+        },
     }
 
     event = service.events().insert(calendarId='primary', body=event).execute()
     s = 'Event created: %s' % (event.get('htmlLink'))
     return s
-
-
 
 
 def setup_google_calendar():
@@ -119,8 +118,11 @@ def setup_google_calendar():
     service = build('calendar', 'v3', credentials=creds)
     return service
 
+
 def index():
     return "<h1>Hello</h1>"
+
+
 def main():
     service = setup_google_calendar()
     read_events()
