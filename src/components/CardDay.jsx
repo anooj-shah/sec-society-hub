@@ -4,7 +4,8 @@ function CardDay(props) {
   return (
     <div className="note">
       <h1>{props.day}</h1>
-      <p>SEC Meeting (8:15pm)</p>
+      <p>{props.agenda}</p>
+      <p>at <i>{props.time}</i></p>
     </div>
   );
 }
