@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from pymongo import MongoClient
-from fastapi import FastAPI
+from flask import Flask
 
 from starlette.middleware.cors import CORSMiddleware
 
@@ -16,18 +16,20 @@ origins = [
     "https://society-hub-api.herokuapp.com/"
 ]
 
-app = FastAPI()
+app = Flask(__name__)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+"""MIDDLEWARE COMMENTED OUT"""
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
 # If modifying these scopes, delete the file token.pickle.
-@app.get("/read_events/")
-async def read_events():
+@app.route("/read_events/", methods=['GET'])
+def read_events():
     """
     Prints the start and name of the next 10 events on the user's calendar.
     """
@@ -52,8 +54,8 @@ async def read_events():
     return dict
 
 
-@app.post("/write_events")
-async def write_event(event):
+@app.route("/write_events", methods=['POST'])
+def write_event(event):
     # Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
     # stored credentials.
     # just for testing, but this would be read in from make_event()
@@ -128,6 +130,7 @@ def main():
     read_events()
     event = {}
     write_event(event)
+    app.run()
     # client = MongoClient()
     #
     # client = MongoClient('mongodb://localhost:27017/')
