@@ -1,5 +1,6 @@
 # Project Spade
 _Societies built using the React Framework_
+
 https://society-hub-api.herokuapp.com/
 ## Getting Started
 ### Creating your first pull request:
